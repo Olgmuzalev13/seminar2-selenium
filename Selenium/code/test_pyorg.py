@@ -67,7 +67,7 @@ class TestExample(BaseCase):
         time.sleep(10)
         self.driver.switch_to.default_content()
 
-    @pytest.mark.skip('skip')
+    #@pytest.mark.skip('skip')
     def test_new_tab(self):
         current_window = self.driver.current_window_handle
 
