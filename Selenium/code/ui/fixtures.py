@@ -5,6 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from ui.pages.base_page import BasePage
 from ui.pages.main_page import MainPage
+from ui.vk_pages.base_page import BasePage as VKBasePage
 
 
 @pytest.fixture()
@@ -62,6 +63,9 @@ def all_drivers(config, request):
 def base_page(driver):
     return BasePage(driver=driver)
 
+@pytest.fixture
+def vk_base_page(driver):
+    return VKBasePage(driver=driver)
 
 @pytest.fixture
 def main_page(driver):

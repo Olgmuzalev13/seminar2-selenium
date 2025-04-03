@@ -1,7 +1,8 @@
 import pytest
+from ui.locators import vk_locators
 from _pytest.fixtures import FixtureRequest
 
-from ui.pages.base_page import BasePage
+from ui.vk_pages.base_page import BasePage
 
 
 class BaseCase:
@@ -11,9 +12,11 @@ class BaseCase:
     def setup(self, driver, config, request: FixtureRequest):
         self.driver = driver
         self.config = config
-
+        self.base_page: BasePage = (request.getfixturevalue('vk_base_page'))
+        self.base_page.click(vk_locators.BasePageLocators.ENTER_LOCATOR, timeout=10)
         self.login_page = LoginPage(driver)
         if self.authorize:
+            
             print('Do something for login')
 
 
@@ -28,7 +31,9 @@ def cookies(credentials, config):
 
 
 class LoginPage(BasePage):
-    url = 'https://education.vk.company'
+    locators = vk_locators.BasePageLocators()
+    locators_main = vk_locators.MainPageLocators()
+    url = 'https://education.vk.company/'
 
     def login(self, user, password):
         return MainPage(self.driver)

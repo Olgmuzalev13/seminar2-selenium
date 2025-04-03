@@ -2,7 +2,8 @@ from selenium.webdriver.common.by import By
 
 
 class BasePageLocators:
-    QUERY_LOCATOR = (By.NAME, 'q')
+    ENTER_LOCATOR = (By.NAME, 'вход / регистрация') 
+    EMAIL_PASS_CONTINUE_LOCATOR = (By.NAME, 'Продолжить с помощью почты и пароля')
     QUERY_LOCATOR_ID = (By.ID, 'id-search-field')
     GO_BUTTON_LOCATOR = (By.XPATH, '//*[@id="submit"]')
     START_SHELL = (By.ID, 'start-shell')
