@@ -13,8 +13,8 @@ class PageNotOpenedExeption(Exception):
 
 class BasePage(object):
 
-    locators = vk_locators.BasePageLocators()
-    locators_main = vk_locators.MainPageLocators()
+    login_locators = vk_locators.LoginPageLocators()
+    main_locators = vk_locators.MainPageLocators()
     url = 'https://education.vk.company/'
 
     def is_opened(self, timeout=15):
@@ -38,11 +38,31 @@ class BasePage(object):
 
     @allure.step('Search')
     def search(self, query):
-        elem = self.find(self.locators.QUERY_LOCATOR_ID)
+        elem = self.find(self.login_locators.QUERY_LOCATOR_ID)
         elem.send_keys(query)
-        go_button = self.find(self.locators.GO_BUTTON_LOCATOR)
+        go_button = self.find(self.login_locators.GO_BUTTON_LOCATOR)
         go_button.click()
         self.my_assert()
+
+    @allure.step('Enter login data')
+    def login(self, login, password):
+        confirm_button = self.find(self.login_locators.ENTER_LOCATOR)
+        confirm_button.click()
+        confirm_button = self.find(self.login_locators.EMAIL_PASS_CONTINUE_LOCATOR)
+        confirm_button.click()
+        login_input = self.find(self.login_locators.EMAIL)
+        login_input.send_keys(login)
+        password_input = self.find(self.login_locators.PASS)
+        password_input.send_keys(password)
+        confirm_button = self.find(self.login_locators.CONFIRM_ENTER)
+        confirm_button.click()
+        close_button = self.find(self.login_locators.CLOSE_NEW_VERSION)
+        close_button.click()
+
+    @allure.step('search')
+    def search(self, name):
+        search_input = self.find(self.main_locators.SEARCH)
+        search_input.send_keys(name)
 
     @allure.step("Step 1")
     def my_assert(self):

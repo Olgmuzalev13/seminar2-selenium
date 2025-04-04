@@ -15,6 +15,8 @@ def driver(config):
     selenoid = config['selenoid']
     vnc = config['vnc']
     options = Options()
+    options.add_argument("disable-quic")
+    options.add_argument("—-ignore-certificate-errors")
     if selenoid:
         capabilities = {
             'browserName': 'chrome',
