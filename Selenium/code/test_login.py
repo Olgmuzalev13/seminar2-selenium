@@ -13,7 +13,7 @@ class BaseCase:
         self.driver = driver
         self.config = config
         self.base_page: BasePage = (request.getfixturevalue('vk_base_page')) 
-        self.base_page.login("razrushitelyvselennoy@mail.ru", "gamilton13")
+        self.base_page.login("razrushitelyvselennoy@mail.ru", "password")
         #self.login_page = LoginPage(driver)
         if self.authorize:
             print('Do something for login')
