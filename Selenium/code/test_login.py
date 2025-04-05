@@ -47,7 +47,7 @@ class TestLK(BaseCase):
         self.base_page.click(vk_locators.MainPageLocators.LESSONS, timeout=10)
         assert 'Лекция 1' in self.driver.page_source  
         self.base_page.click(vk_locators.MainPageLocators.SEMINAR2, timeout=10) 
-        assert 'End-to-End тесты на Python' in self.driver.page_source  
+        assert 'End-to-End тесты на Python' in self.driver.page_source
 
     def test_search_Ilia(self): 
         self.base_page.click(vk_locators.MainPageLocators.SEARCH_OPEN, timeout=10)
