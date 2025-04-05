@@ -38,7 +38,6 @@ class BasePage(object):
 
     @allure.step('Login')
     def login(self, login, password):
-        assert 'вход / регистрация' in self.driver.page_source
         confirm_button = self.find(self.login_locators.ENTER_LOCATOR)
         confirm_button.click()
         assert 'Для продолжения выбери удобный способ входа.' in self.driver.page_source
@@ -63,8 +62,30 @@ class BasePage(object):
         assert search_input.get_attribute('placeholder') == "Поиск..."
         search_input.send_keys(name)
 
+    @allure.step('Get topic page by id')
+    def get_topic_page_by_id(self, id):
+        self.click(vk_locators.MainPageLocators.EDUCATION_BUTTON, timeout=10)
+        assert '#904: Программа по веб-разработке ' in self.driver.page_source
+        self.click(vk_locators.MainPageLocators.DISCIPLINE_LOCATOR(id=id), timeout=10)
+
+    @allure.step('Get student by address')
+    def get_student_by_address(self, address):
+        self.click(vk_locators.MainPageLocators.STUDENT(address), timeout=10)
+    
+    @allure.step('Get lesson by id')
+    def get_lesson_by_id(self, id):
+        self.click(vk_locators.MainPageLocators.LESSON(id), timeout=10)
+
     @allure.step('Click')
     def click(self, locator, timeout=None) -> WebElement:
         self.find(locator, timeout=timeout)
         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
         elem.click()
+
+class LoginPage(BasePage):
+    def login(self):
+        return MainPage(self.driver)
+
+
+class MainPage(BasePage):
+    url = 'https://education.vk.company/feed/'

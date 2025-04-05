@@ -18,40 +18,30 @@ class BaseCase:
             self.base_page.login(login, password)
 
 
-class LoginPage(BasePage):
-    url = 'https://education.vk.company/'
-
-    def login(self):
-        return MainPage(self.driver)
-
-
-class MainPage(BasePage):
-    url = 'https://education.vk.company/feed/'
-
 
 class TestLogin(BaseCase):
     authorize = False
-    def test_login(self):
-        assert 'Настоящие знания' in self.driver.page_source
-        assert 'education' in self.driver.page_source
+    def test_login(self, request: FixtureRequest):
+        login, password = request.getfixturevalue("credentials")
+        self.base_page.login(login, password)
+        user_bar = self.base_page.find(vk_locators.MainPageLocators.USER_MENU, timeout=10)
+        assert user_bar is not None
 
 
 class TestLK(BaseCase):
     authorize = True
 
+
     def test_get_seminar_info(self):
         assert 'Прямой эфир' in self.driver.page_source 
-        self.base_page.click(vk_locators.MainPageLocators.EDUCATION_BUTTON, timeout=10)
-        assert '#904: Программа по веб-разработке ' in self.driver.page_source
-        self.base_page.click(vk_locators.MainPageLocators.EMAIL_PASS_CONTINUE_LOCATOR, timeout=10)
+        self.base_page.get_topic_page_by_id(id="2459")
         self.base_page.click(vk_locators.MainPageLocators.LESSONS, timeout=10)
-        assert 'Лекция 1' in self.driver.page_source  
-        self.base_page.click(vk_locators.MainPageLocators.SEMINAR2, timeout=10) 
+        assert 'Лекция 1' in self.driver.page_source
+        self.base_page.get_lesson_by_id(id="30921")
         assert 'End-to-End тесты на Python' in self.driver.page_source
 
     def test_search_Ilia(self): 
         self.base_page.click(vk_locators.MainPageLocators.SEARCH_OPEN, timeout=10)
         self.base_page.search("Андриянов Илья\n")
-        assert 'Прямой эфир' not in self.driver.page_source  
-        self.base_page.click(vk_locators.MainPageLocators.ILIA, timeout=10)
-        assert 'Хорошо, договорились' in self.driver.page_source  
+        self.base_page.get_student_by_address(address="i.andriianov")
+        assert self.driver.title =="Профиль - Илья Андриянов - VK Education"
