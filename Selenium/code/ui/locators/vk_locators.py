@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 
 class LoginPageLocators:
     ENTER_LOCATOR = (By.CLASS_NAME, 'AuthButton__SAuthLink-sc-1iwc4q0-0') 
-    #ENTER_LOCATOR = (By.CLASS_NAME, '//button[text()="вход / регистрация"]') 
     EMAIL_PASS_CONTINUE_LOCATOR = (By.XPATH, '//button[text()="Продолжить с помощью почты и пароля"]')
     EMAIL = (By.XPATH, '//*[@id="email"]')
     PASS = (By.XPATH, '//*[@id="password"]')
@@ -18,5 +17,5 @@ class MainPageLocators(LoginPageLocators):
 
     SEARCH_OPEN = (By.XPATH, '//ul/li[@class="js-show-search"]/a[contains(@href, "#")]')
     SEARCH = (By.XPATH, '//ul/li[@class="js-search-input"]/form/input') 
-    ILIA = (By.XPATH, '//a[contains(@href, "https://education.vk.company/profile/i.andriianov/")]') 
+    ILIA = (By.XPATH, '//a[contains(@href, "https://education.vk.company/profile/i.andriianov/")]')
 

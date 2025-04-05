@@ -6,6 +6,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from ui.pages.base_page import BasePage
 from ui.pages.main_page import MainPage
 from ui.vk_pages.base_page import BasePage as VKBasePage
+from os import getenv
 
 
 @pytest.fixture()
@@ -73,3 +74,6 @@ def vk_base_page(driver):
 def main_page(driver):
     return MainPage(driver=driver)
 
+@pytest.fixture
+def credentials():
+    return getenv("Login"), getenv("Pass")

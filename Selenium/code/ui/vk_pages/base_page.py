@@ -36,20 +36,15 @@ class BasePage(object):
     def find(self, locator, timeout=None):
         return self.wait(timeout).until(EC.presence_of_element_located(locator))
 
-    @allure.step('Search')
-    def search(self, query):
-        elem = self.find(self.login_locators.QUERY_LOCATOR_ID)
-        elem.send_keys(query)
-        go_button = self.find(self.login_locators.GO_BUTTON_LOCATOR)
-        go_button.click()
-        self.my_assert()
-
-    @allure.step('Enter login data')
+    @allure.step('Login')
     def login(self, login, password):
+        assert 'вход / регистрация' in self.driver.page_source
         confirm_button = self.find(self.login_locators.ENTER_LOCATOR)
         confirm_button.click()
+        assert 'Для продолжения выбери удобный способ входа.' in self.driver.page_source
         confirm_button = self.find(self.login_locators.EMAIL_PASS_CONTINUE_LOCATOR)
         confirm_button.click()
+        assert 'Нет аккаунта?' in self.driver.page_source
         login_input = self.find(self.login_locators.EMAIL)
         login_input.send_keys(login)
         password_input = self.find(self.login_locators.PASS)
@@ -57,17 +52,16 @@ class BasePage(object):
         confirm_button = self.find(self.login_locators.CONFIRM_ENTER)
         confirm_button.click()
         close_button = self.find(self.login_locators.CLOSE_NEW_VERSION)
+        print(close_button.get_attribute('xmlns'))
+        assert "http://www.w3.org/2000/svg" in self.driver.page_source
         close_button.click()
+        assert 'вход / регистрация' not in self.driver.page_source
 
-    @allure.step('search')
+    @allure.step('Search')
     def search(self, name):
         search_input = self.find(self.main_locators.SEARCH)
+        assert search_input.get_attribute('placeholder') == "Поиск..."
         search_input.send_keys(name)
-
-    @allure.step("Step 1")
-    def my_assert(self):
-        assert 1 == 1
-
 
     @allure.step('Click')
     def click(self, locator, timeout=None) -> WebElement:

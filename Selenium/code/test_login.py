@@ -6,35 +6,22 @@ from ui.vk_pages.base_page import BasePage
 
 
 class BaseCase:
-    authorize = True
+    authorize = False
 
     @pytest.fixture(scope='function', autouse=True)
     def setup(self, driver, config, request: FixtureRequest):
         self.driver = driver
         self.config = config
-        self.base_page: BasePage = (request.getfixturevalue('vk_base_page')) 
-        self.base_page.login("razrushitelyvselennoy@mail.ru", "password")
-        #self.login_page = LoginPage(driver)
+        self.base_page: BasePage = (request.getfixturevalue('vk_base_page'))
         if self.authorize:
-            print('Do something for login')
-
-
-@pytest.fixture(scope='session')
-def credentials():
-        pass
-
-
-@pytest.fixture(scope='session')
-def cookies(credentials, config):
-        pass
+            login, password = request.getfixturevalue("credentials")
+            self.base_page.login(login, password)
 
 
 class LoginPage(BasePage):
-    login_locators = vk_locators.LoginPageLocators()
-    main_locators = vk_locators.MainPageLocators()
     url = 'https://education.vk.company/'
 
-    def login(self, user, password):
+    def login(self):
         return MainPage(self.driver)
 
 
@@ -43,28 +30,28 @@ class MainPage(BasePage):
 
 
 class TestLogin(BaseCase):
-    authorize = True
-
-    def test_login(self, credentials):
-        pass
+    authorize = False
+    def test_login(self):
+        assert 'Настоящие знания' in self.driver.page_source
+        assert 'education' in self.driver.page_source
 
 
 class TestLK(BaseCase):
+    authorize = True
 
-    @pytest.mark.skip('skip')
-    def test_lk1(self):
+    def test_get_seminar_info(self):
+        assert 'Прямой эфир' in self.driver.page_source 
         self.base_page.click(vk_locators.MainPageLocators.EDUCATION_BUTTON, timeout=10)
+        assert '#904: Программа по веб-разработке ' in self.driver.page_source
         self.base_page.click(vk_locators.MainPageLocators.EMAIL_PASS_CONTINUE_LOCATOR, timeout=10)
         self.base_page.click(vk_locators.MainPageLocators.LESSONS, timeout=10)
-        self.base_page.click(vk_locators.MainPageLocators.SEMINAR2, timeout=10)
+        assert 'Лекция 1' in self.driver.page_source  
+        self.base_page.click(vk_locators.MainPageLocators.SEMINAR2, timeout=10) 
+        assert 'End-to-End тесты на Python' in self.driver.page_source  
 
-    def test_lk2(self):
-        
+    def test_search_Ilia(self): 
         self.base_page.click(vk_locators.MainPageLocators.SEARCH_OPEN, timeout=10)
         self.base_page.search("Андриянов Илья\n")
+        assert 'Прямой эфир' not in self.driver.page_source  
         self.base_page.click(vk_locators.MainPageLocators.ILIA, timeout=10)
-        time.sleep(5)
-
-
-    def test_lk3(self):
-        pass
+        assert 'Хорошо, договорились' in self.driver.page_source  
