@@ -12,11 +12,11 @@ class LoginPageLocators:
 
 class MainPageLocators(LoginPageLocators):
     EDUCATION_BUTTON = (By.XPATH, "//a[contains(@href, '/curriculum/program/')]") 
-    DISCIPLINE_LOCATOR = staticmethod(lambda id: (By.XPATH, f"//a[contains(@href, '/curriculum/program/discipline/{id}/')]"))
+    #DISCIPLINE_LOCATOR = staticmethod(lambda id: (By.XPATH, f"//a[contains(@href, '/curriculum/program/discipline/{id}/')]"))
     LESSONS = (By.XPATH, '//a[text()="Занятия"]')
-    LESSON = staticmethod(lambda id: (By.XPATH, f'//a[contains(@href, "/curriculum/program/lesson/{id}/")]'))
+    #LESSON = staticmethod(lambda id: (By.XPATH, f'//a[contains(@href, "/curriculum/program/lesson/{id}/")]'))
 
     SEARCH_OPEN = (By.XPATH, '//ul/li[@class="js-show-search"]/a[contains(@href, "#")]')
     SEARCH = (By.XPATH, '//ul/li[@class="js-search-input"]/form/input') 
-    STUDENT = staticmethod(lambda address: (By.XPATH, f'//a[contains(@href, "https://education.vk.company/profile/{address}/")]'))
+    #STUDENT = staticmethod(lambda address: (By.XPATH, f'//a[contains(@href, "https://education.vk.company/profile/{address}/")]'))
 
