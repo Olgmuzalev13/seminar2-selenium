@@ -38,10 +38,10 @@ class BasePage(object):
 
     @allure.step('Login')
     def login(self, login, password):
-        confirm_button = self.find(self.login_locators.ENTER_LOCATOR)
-        confirm_button.click()
-        confirm_button = self.find(self.login_locators.EMAIL_PASS_CONTINUE_LOCATOR)
-        confirm_button.click()
+        enter_login_button = self.find(self.login_locators.ENTER_LOCATOR)
+        enter_login_button.click()
+        choose_way_to_enter_button = self.find(self.login_locators.EMAIL_PASS_CONTINUE_LOCATOR)
+        choose_way_to_enter_button.click()
         login_input = self.find(self.login_locators.EMAIL)
         login_input.send_keys(login)
         password_input = self.find(self.login_locators.PASS)
@@ -51,19 +51,6 @@ class BasePage(object):
         close_button = self.find(self.login_locators.CLOSE_NEW_VERSION)
         close_button.click()
         assert 'вход / регистрация' not in self.driver.page_source
-        # enter_login_button = self.find(self.login_locators.ENTER_LOCATOR)
-        # enter_login_button.click()
-        # choose_way_to_enter_button = self.find(self.login_locators.EMAIL_PASS_CONTINUE_LOCATOR)
-        # choose_way_to_enter_button.click()
-        # login_input = self.find(self.login_locators.EMAIL)
-        # login_input.send_keys(login)
-        # password_input = self.find(self.login_locators.PASS)
-        # password_input.send_keys(password)
-        # confirm_button = self.find(self.login_locators.CONFIRM_ENTER)
-        # confirm_button.click()
-        # close_button = self.find(self.login_locators.CLOSE_NEW_VERSION)
-        # close_button.click()
-        # assert 'вход / регистрация' not in self.driver.page_source
 
     @allure.step('Search')
     def search(self, name):
